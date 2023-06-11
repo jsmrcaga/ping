@@ -1,0 +1,23 @@
+{
+  "name": "pinger",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test ./test/test",
+    "build": "webpack",
+    "migrate": "wrangler d1 execute ping --local --file",
+    "start": "wrangler dev --test-scheduled"
+  },
+  "dependencies": {
+    "db": "*",
+    "webpack": "^5.83.1",
+    "webpack-cli": "^5.1.1"
+  },
+  "keywords": [],
+  "author": "Jo Colina <jo@jocolina.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "sqlite3": "^5.1.6"
+  }
+}
