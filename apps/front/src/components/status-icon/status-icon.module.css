@@ -1,0 +1,40 @@
+svg.icon {
+	width: 40px;
+	height: 40px;
+}
+
+svg.icon * {
+	fill: white;
+}
+
+
+svg.up * {
+	fill: var(--green-primary);
+}
+
+svg.down * {
+	fill: var(--red-primary);
+}
+
+svg.maintenance * {
+	fill: var(--blue-primary);
+}
+
+/* Variations */
+svg.icon.small {
+	width: 20px;
+	height: 20px;
+}
+
+svg.icon.button {
+	cursor: pointer;
+}
+
+svg.icon.button * {
+	fill: var(--dark-5);
+	transition: fill 0.15s ease-in-out;
+}
+
+svg.icon.button:hover * {
+	fill: white;
+}

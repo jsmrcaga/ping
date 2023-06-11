@@ -1,0 +1,17 @@
+.title {
+	text-align: center;
+}
+
+.title.left {
+	text-align: left;
+}
+
+h1.title {
+	font-size: 2.5rem;
+	margin: 3rem auto;
+}
+
+h2.title {
+	font-size: 2rem;
+	margin: 2rem auto;
+}

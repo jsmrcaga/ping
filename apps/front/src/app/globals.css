@@ -1,0 +1,31 @@
+/* Dark theme */
+:root {
+	--dark-1: rgb(10, 10, 10);
+	--dark-2: rgb(20, 20, 20);
+	--dark-3: rgb(25, 25, 25);
+	--dark-4: rgb(50, 50, 50);
+	--dark-5: rgb(75, 75, 75);
+	--dark-6: rgb(100, 100, 100);
+
+	--text-1: rgb(220, 220, 220);
+	--text-2: rgb(180, 180, 180);
+	--text-3: rgb(160, 160, 160);
+	--text-4: rgb(140, 140, 140);
+
+	--green-primary: rgb(100, 200, 100);
+	--green-secondary: rgb(80, 180, 80);
+
+	--red-primary: rgb(240, 100, 100);
+	--red-secondary: rgb(220, 80, 80);
+
+	--blue-primary: rgb(100, 100, 200);
+	--blue-secondary: rgb(80, 80, 180);
+}
+
+
+body {
+	margin: 0;
+	box-sizing: border-box;
+	background-color: var(--dark-1);
+	color: var(--text-1);
+}

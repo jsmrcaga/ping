@@ -1,0 +1,20 @@
+.button {
+	border: none;
+	padding: 7px 12px;
+	border-radius: 6px;
+
+	background: none;
+	color: var(--dark-6);
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+}
+
+.button:not(.active):hover {
+	background: var(--dark-4);
+	color: white;
+}
+
+.button.active {
+	background: var(--dark-3);
+	color: white;
+}

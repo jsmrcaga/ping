@@ -1,0 +1,28 @@
+.box {
+	border-radius: 10px;
+	background: var(--dark-2);
+	padding: 20px 25px;
+	border: 1px solid var(--dark-3);
+}
+
+.box:not(:last-child) {
+	margin-bottom: 2rem;
+}
+
+.title {
+	display: flex;
+	align-items: center;
+	margin-top: 0;
+}
+
+.title > span {
+	display: block;
+}
+
+.tag {
+	margin-left: auto;
+}
+
+.tag-text {
+	margin-left: 0.5rem;
+}

@@ -1,0 +1,16 @@
+.container {
+	margin-inline: auto;
+	max-width: 850px;
+}
+
+.main {
+	padding: 0;
+	padding-bottom: 20px;
+}
+
+@media only screen and (max-width: 550px) {
+	.main {
+		padding: 0 30px;
+		padding-bottom: 20px;
+	}
+}

@@ -1,0 +1,114 @@
+.banner {
+	margin-bottom: 4rem !important;
+}
+
+.title {
+	display: flex;
+	align-items: center;
+}
+
+.title h2 {
+	margin: 0 0;
+	margin-left: 1em;
+}
+
+.banner-incidents {
+	margin-top: 1.5rem;
+}
+
+
+.big-button {
+	display: grid;
+	grid-template-columns: 30px 1fr 30px;
+}
+
+.button-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.link, .link:visited, .link:active {
+	text-decoration: none;
+	color: unset;
+}
+
+.incident-link {
+	width: 100%;
+	display: block;
+}
+
+.incident {
+	padding: 15px 15px;
+
+	background-color: var(--dark-3);
+	border: 1px solid var(--dark-4);
+	border-radius: 10px;
+
+	transition: transform 0.2s ease-in-out;
+}
+
+.incident-text {
+	padding-left: 1rem;
+}
+
+.incident:not(:first-child) {
+	margin-top: 20px;
+}
+
+.incident:hover {
+	transform: scale(1.01);
+}
+
+.incident .incident-title {
+	display: flex;
+	font-weight: bold;
+	align-items: center;
+	gap: .7rem;
+	font-size: 1.2rem;
+}
+
+.incident span.description {
+	display: block;
+	font-size: 0.9rem;
+	margin-top: 1rem;
+}
+
+
+.incident-dates {
+	margin-top: 8px;
+	display: grid;
+	grid-template-columns: repeat(3, 180px);
+	gap: 0.8rem;
+}
+
+.incident-date {
+	font-size: 0.85rem;
+	display: flex;
+	flex-direction: column;
+}
+
+.incident-date span:nth-child(1) {
+	color: var(--text-4);
+}
+
+.incident-date span:nth-child(2) {
+	color: var(--text-2);
+	font-size: 1rem;
+}
+
+.incident-date:hover span:nth-child(2) {
+	color: var(--text-1);
+}
+
+
+@media only screen and (max-width: 550px) {
+	.incident .incident-title {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.incident-dates {
+		grid-template-columns: 1fr;
+	}
+}

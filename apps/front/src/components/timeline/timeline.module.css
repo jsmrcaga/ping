@@ -1,0 +1,42 @@
+.timeline-item {
+	display: grid;
+	grid-template-columns: 120px 1fr;
+	margin-top: 3rem;
+	gap: 3rem;
+}
+
+.date {
+	position: relative;
+	font-weight: bold;
+	font-size: 1.5rem;
+	text-align: center;
+}
+
+.date > span {
+	background-color: var(--dark-1);
+	z-index: 1;
+	position: relative;
+}
+
+.timeline-item:not(:last-child) .date::after {
+	content: '';
+	border: 2px solid var(--dark-4);
+	height: calc(100% - 10px);
+	position: absolute;
+	left: 50%;
+	z-index: 0;
+	margin-top: 10px;
+}
+
+.content {
+	display: flex;
+	align-items: flex-start;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+@media only screen and (max-width: 550px) {
+	.timeline-item {
+		grid-template-columns: 1fr;	
+	}
+}

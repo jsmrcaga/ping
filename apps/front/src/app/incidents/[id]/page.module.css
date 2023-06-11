@@ -1,0 +1,19 @@
+.danger {
+	color: var(--red-primary);
+}
+
+.maintenance {
+	color: var(--blue-primary);
+}
+
+.update-title {
+	margin-top: 0;
+}
+
+.timeline-item > div > span {
+	font-size: 1.2rem;
+}
+
+.box {
+	width: -webkit-fill-available;
+}
