@@ -1,0 +1,12 @@
+node_modules/
+
+**/*.tfvars
+**/*.tfplan
+**/.terraform
+**/*.tfstate
+**/*.tfstate.backup
+
+**/out.js
+
+.turbo
+.wrangler
