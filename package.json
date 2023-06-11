@@ -1,0 +1,21 @@
+{
+  "name": "ping",
+  "version": "0.0.0",
+  "description": "A simple status page built over Cloudflare Workers and Pages.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "build": "turbo run build",
+    "bootstrap": "echo HI"
+  },
+  "keywords": [],
+  "author": "Jo Colina <jo@jocolina.com>",
+  "license": "MIT",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "devDependencies": {
+    "turbo": "^1.9.8"
+  }
+}
