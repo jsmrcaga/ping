@@ -19,6 +19,16 @@ resource "cloudflare_worker_script" "ping_worker_script" {
 
 resource "cloudflare_worker_route" "api_route" {
   zone_id = var.cloudflare.zone_id
-  pattern = "api.status.jocolina.com/*"
+  pattern = "${var.endpoints.api}/*"
   script_name = cloudflare_worker_script.ping_worker_script.name
+}
+
+resource cloudflare_record "api_status_jocolina" {
+  zone_id = var.cloudflare.zone_id
+
+  name = "api.status"
+  type = "CNAME"
+  value = "jocolina.com"
+
+  proxied = true
 }

@@ -21,6 +21,6 @@ resource "cloudflare_worker_cron_trigger" "pinger_schdeuler" {
   account_id = var.cloudflare.account_id
   script_name = cloudflare_worker_script.pinger_worker.name
   schedules = [
-    "*/10 * * * *" // every minute
+    "*/10 * * * *" // every 10 minutes
   ]
 }
