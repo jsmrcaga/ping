@@ -21,7 +21,7 @@ resource "vercel_project" "frontend" {
   
   environment = concat(local.environment, [{
     key = "NEXT_PUBLIC_API_URL"
-    value = var.endpoints.api
+    value = "https://${var.endpoints.api}"
     target = ["production"]
   }])
 }

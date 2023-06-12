@@ -48,7 +48,7 @@ jobs:
         env:
           VERCEL_ORG_ID: 8KfUeVURiVHjnpyiPw0u27sY
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_PROJECT_ID: prj_NmQluIiORiO5SCilqGdIFMI7xsIU
+          VERCEL_PROJECT_ID: prj_UDJVGMpzgmW6HbvrBLiX2llGRzs2
 
   deploy:
     name: Deploy frontend
@@ -78,4 +78,4 @@ jobs:
         env:
           VERCEL_ORG_ID: 8KfUeVURiVHjnpyiPw0u27sY
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_PROJECT_ID: prj_NmQluIiORiO5SCilqGdIFMI7xsIU
+          VERCEL_PROJECT_ID: prj_UDJVGMpzgmW6HbvrBLiX2llGRzs2
