@@ -1,5 +1,12 @@
-const { Page, Monitor, MonitorCheck, Incident } = require('db');
 const { Router } = require('@control/cloudflare-workers-router');
+const auth = require('./auth');
+
+const {
+	Page,
+	Monitor,
+	MonitorCheck,
+	Incident
+} = require('db');
 
 const router = new Router();
 
@@ -58,5 +65,52 @@ router.get('/:endpoint/incidents/:id', (request, { endpoint, id }) => {
 		return incident;
 	});
 });
+
+router.post('/pages', auth(request => {
+	return request.json().then(data => {
+		const { sections, host, title } = data;
+
+		try {
+			Page.validate({ sections, host, title });
+		} catch(e) {
+			return new Response(JSON.stringify({
+				error: e.message
+			}), {
+				status: 400,
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+		}
+
+		return Page.create({
+			sections,
+			host,
+			title
+		});
+	});
+}));
+
+router.post('/monitors', auth(request => {
+	return request.json().then(data => {
+		try {
+			Monitor.validate(data);
+		} catch(e) {
+			return new Response(JSON.stringify({
+				error: e.message
+			}), {
+				status: 400,
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+		}
+		return Monitor.create(data);
+	});
+}));
+
+router.get('/monitors', auth(request => {
+	return Monitor.all();
+}));
 
 module.exports = router;

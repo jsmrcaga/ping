@@ -5,6 +5,13 @@ workers_dev = false
 
 compatibility_date = "2023-05-12"
 
+# So that we don't write test:1234 in prod
+[env.dev]
+[env.production.vars]
+ADMIN_USERNAME = "test"
+ADMIN_KEY = "1234"
+
+
 [[d1_databases]]
 binding = "PING_DB"
 database_name = "ping"

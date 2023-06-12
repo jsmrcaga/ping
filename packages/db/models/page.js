@@ -6,6 +6,29 @@ const { AggregatedMonitorCheck } = require('./monitor-check');
 
 const MONTH_IN_MS = 1000 * 60 * 60 * 24 * 31;
 
+// For reference & validation
+class Section {
+	static validate_component(component) {
+		const  { title, monitors, type } = component;
+		if(!monitors?.length) {
+			throw new Error('A component needs at least one monitor');
+		}
+	}
+
+	static validate(obj) {
+		const { title, components } = obj;
+		if(!title) {
+			throw new Error('section.title is mandatory');
+		}
+
+		if(!components?.length) {
+			throw new Error('At least one component necessary in section');
+		}
+
+		components.forEach(c => this.validate_component(c));
+	}
+}
+
 class Page extends Model {
 	static TABLE = 'page';
 
@@ -123,6 +146,34 @@ class Page extends Model {
 		const truncate_page = super.truncate();
 		const truncate_p2m = this.run('DELETE FROM page_monitor_m2m');
 		return Promise.all([truncate_p2m, truncate_page]);
+	}
+
+	static for_host(host) {
+		const page_query = 'SELECT * FROM page WHERE page.p_host = ?';
+		return this.get(page_query, host);
+	}
+
+	static validate({ title, host, sections=[] }) {
+		if(!title || !host) {
+			throw new Error('title and host are mandatory');
+		}
+
+		if(!sections?.length) {
+			throw new Error('sections is required');
+		}
+
+		sections.forEach(section => Section.validate(section));
+	}
+
+	static insert({ title, host, sections }) {
+		this.validate({ title, host, sections });
+
+		const query = `
+			INSERT INTO page (p_host, p_title, p_sections_json)
+			VALUES (?, ?, ?)
+		`;
+
+		return this.run(query, title, host, JSON.stringify(sections));
 	}
 }
 

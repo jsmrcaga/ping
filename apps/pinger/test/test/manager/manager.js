@@ -121,6 +121,7 @@ describe('Manager', () => {
 
 		beforeEach(() => {
 			const m1 = Monitor.create({
+				name: 'Test monitor 1',
 				id: 'monitor-1',
 				type: 'noop',
 				config: {},
@@ -129,6 +130,7 @@ describe('Manager', () => {
 			});
 
 			const m2 = Monitor.create({
+				name: 'Test monitor 2',
 				id: 'monitor-2',
 				type: 'noop',
 				config: {
@@ -177,6 +179,7 @@ describe('Manager', () => {
 
 		beforeEach(() => {
 			const m1 = Monitor.create({
+				name: 'Test monitor w/ incident',
 				id: 'monitor-with-incident',
 				type: 'noop',
 				config: {

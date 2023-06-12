@@ -3,6 +3,8 @@ variable cloudflare {
     api_token = string
     account_id = string
     zone_id = string
+
+    api_environment = optional(map(string), {})
   })
 
 }
