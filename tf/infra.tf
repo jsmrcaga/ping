@@ -7,6 +7,6 @@ module status_infra {
 
   endpoints = {
     front = "status.jocolina.com"
-    api = "api.status.jocolina.com"
+    api = "api-status.jocolina.com"
   }
 }

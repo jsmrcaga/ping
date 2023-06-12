@@ -26,7 +26,7 @@ resource "cloudflare_worker_route" "api_route" {
 resource cloudflare_record "api_status_jocolina" {
   zone_id = var.cloudflare.zone_id
 
-  name = "api.status"
+  name = "api-status"
   type = "CNAME"
   value = "jocolina.com"
 
