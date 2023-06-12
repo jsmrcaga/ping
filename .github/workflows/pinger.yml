@@ -1,0 +1,55 @@
+name: Text & Publish
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - apps/pinger/**.*
+      - packages/db/**.*
+
+  push:
+    branches:
+      - master
+    paths:
+      - apps/pinger/**.*
+      - packages/db/**.*
+  workflow_dispatch:
+
+
+defaults:
+  run:
+    working-directory: apps/pinger
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Test
+
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node_version: 20.2.0
+
+      - uses: actions/checkout@master
+      - run: npm i
+      - run: npm test
+
+  publish:
+    runs-on: ubuntu-latest
+    name: Publish
+
+    needs: [test]
+
+    if: ${{ github.event_name == 'push' }}
+
+    steps:
+      - uses: actions/checkout@master
+      - run: npm i -g @cloudflare/wrangler
+      - run: npm i
+
+      - run: wrangler deploy -c ./wrangler.toml
+        env:
+          CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}

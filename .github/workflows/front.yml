@@ -1,0 +1,81 @@
+name: PR - Build frontend
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - 'apps/front/**.*'
+
+  push:
+    branches:
+      - master
+    paths:
+      - 'apps/front/**.*'
+  workflow_dispatch:
+
+
+defaults:
+  run:
+    working-directory: apps/front
+
+
+jobs:
+  build:
+    name: Build frontend
+    runs-on: ubuntu-latest
+
+    if: ${{ github.event_name == 'pull_request' }}
+
+    steps:
+
+      - uses: actions/checkout@master
+
+      # Install vercel after checkout because `working_directory` crashes otherwise
+      - run: npm i -g vercel
+
+      - uses: actions/cache@master
+        id: cache-node-modules
+        with:
+          path: node_modules
+          key: npm-${{ hashFiles('front/package-lock.json') }}
+
+      - run: npm i
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+
+      - run: |
+          vercel pull --yes --token=${{ secrets.VERCEL_TOKEN }}
+          vercel build --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: 8KfUeVURiVHjnpyiPw0u27sY
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_PROJECT_ID: prj_NmQluIiORiO5SCilqGdIFMI7xsIU
+
+  deploy:
+    name: Deploy frontend
+    runs-on: ubuntu-latest
+
+    if: ${{ github.event_name == 'push' }}
+
+    steps:
+
+      - uses: actions/checkout@master
+
+      # Install vercel after checkout because `working_directory` crashes otherwise
+      - run: npm i -g vercel
+
+      - uses: actions/cache@master
+        id: cache-node-modules
+        with:
+          path: node_modules
+          key: npm-${{ hashFiles('front/package-lock.json') }}
+
+      - run: npm i
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+
+      - run: |
+          vercel pull --yes --token=${{ secrets.VERCEL_TOKEN }}
+          vercel deploy --prod --token ${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: 8KfUeVURiVHjnpyiPw0u27sY
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_PROJECT_ID: prj_NmQluIiORiO5SCilqGdIFMI7xsIU
