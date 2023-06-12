@@ -9,4 +9,14 @@ module ping_repo {
   description = "A simple status page built over CloudFlare Workers"
 
   topics = ["management", "infrastructure", "reporting", "status"]
+
+  actions = {
+    secrets = {
+      CF_ACCOUNT_ID = var.cloudflare.account_id
+      CF_API_TOKEN = var.cloudflare.api_token
+      CF_ZONE_ID = var.cloudflare.zone_id
+
+      VERCEL_TOKEN = var.vercel.api_token
+    }
+  }
 }

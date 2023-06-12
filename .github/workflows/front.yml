@@ -73,7 +73,7 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
 
       - run: |
-          vercel pull --yes --token=${{ secrets.VERCEL_TOKEN }}
+          vercel pull --yes --environment production --token=${{ secrets.VERCEL_TOKEN }}
           vercel deploy --prod --token ${{ secrets.VERCEL_TOKEN }}
         env:
           VERCEL_ORG_ID: 8KfUeVURiVHjnpyiPw0u27sY
