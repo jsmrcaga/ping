@@ -12,7 +12,7 @@ app.error(error => {
 	}
 
 	if(error instanceof Model.DoesNotExist) {
-		return new Response(null, { status: 404 });					
+		return new Response(null, { status: 404 });
 	}
 
 	return new Response(null, { status: 500 });
@@ -24,7 +24,7 @@ export default {
 		// Luckily app.run returns a promise
 		try {
 			Model.DB = env.PING_DB;
-			return app.run({ request }).catch(e => {
+			return app.run({ request, env }).catch(e => {
 				return new Response(null, { status: 500 });
 			});
 		} catch(e) {

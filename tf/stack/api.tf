@@ -5,6 +5,16 @@ resource "cloudflare_worker_script" "ping_worker_script" {
 
   module = true
 
+  dynamic "plain_text_binding" {
+    for_each = var.cloudflare.api_environment
+    iterator = env
+
+    content {
+      name = env.key
+      text = env.value
+    }
+  }
+
   # For D1
   # service_binding {
   #   name = "PING_DB"

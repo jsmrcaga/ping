@@ -33,7 +33,26 @@ class Monitor extends Model {
 		return this.query(query, host);
 	}
 
-	static insert({ id, type, name, config, interval_ms, consecutive_failed_checks_incident }) {
+	static validate({ id, type, name, config, interval_ms, consecutive_failed_checks_incident }) {
+		if(!id) {
+			throw new Error('monitor.id is mandatory and must be unique');
+		}
+
+		if(!['heartbeat', 'http', 'noop'].includes(type)) {
+			throw new Error('monitor.type must be one of heartbeat, http or noop');
+		}
+
+		if(!interval_ms) {
+			throw new Error('monitor.interval_ms must exist and be greater than 60 000');
+		}
+
+		if(!name) {
+			throw new Error('monitor.name should be included');
+		}
+	}
+
+	static insert({ id, type, name, config={}, interval_ms, consecutive_failed_checks_incident }) {
+		this.validate({ id, type, name, config, interval_ms, consecutive_failed_checks_incident });
 		const query = `
 			INSERT INTO monitor (m_id, m_type, m_name, m_config_json, m_interval_ms, m_consecutive_failed_checks_incident)
 			VALUES (
