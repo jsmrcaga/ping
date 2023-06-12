@@ -1,0 +1,33 @@
+name: "API: Publish"
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - apps/api/**.*
+      - packages/db/**.*
+  workflow_dispatch:
+
+
+defaults:
+  run:
+    working-directory: apps/api
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    name: Publish
+
+    if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
+
+    steps:
+      - uses: actions/checkout@master
+      - run: npm i -g wrangler
+      - run: npm i
+
+      - run: wrangler deploy -c ./wrangler.toml
+        env:
+          CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
