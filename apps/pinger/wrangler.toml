@@ -6,7 +6,7 @@ workers_dev = false
 compatibility_date = "2023-05-12"
 
 [triggers]
-crons = ['*/1 * * * *']
+crons = ['*/10 * * * *']
 
 [[d1_databases]]
 binding = "PING_DB"
