@@ -7,7 +7,7 @@ compatibility_date = "2023-05-12"
 
 # So that we don't write test:1234 in prod
 [env.dev]
-[env.production.vars]
+[env.dev.vars]
 ADMIN_USERNAME = "test"
 ADMIN_KEY = "1234"
 

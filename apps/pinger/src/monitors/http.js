@@ -20,12 +20,9 @@ class HTTPMonitor extends Monitor {
 		super({ config: default_config, ...rest });
 	}
 
-	validat
-
-
-	e_config({ method, endpoint }) {
+	validate_config({ method, endpoint }) {
 		if(!(method && endpoint)) {
-			throw new Error('Missing endpoint ormethod');
+			throw new Error('Missing endpoint or method');
 		}
 	}
 
