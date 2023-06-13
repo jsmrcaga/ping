@@ -5,7 +5,7 @@ resource "cloudflare_worker_script" "ping_worker_script" {
 
   module = true
 
-  dynamic "plain_text_binding" {
+  dynamic "secret_text_binding" {
     for_each = var.cloudflare.api_environment
     iterator = env
 
