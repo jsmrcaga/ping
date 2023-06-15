@@ -6,8 +6,25 @@ export default {
 		Model.DB = env.PING_DB;
 		const run_promise = manager.run().catch(e => {
 			console.error(e);
-			throw e;
+
+			return fetch('https://api.logsnag.com/v1/log', {
+				method: 'POST',
+				body: JSON.stringify({
+					project: 'ping',
+					channel: 'pinger-errors',
+					event: error.message || 'Unknown error',
+					description: error.stack,
+					notify: true,
+				}),
+				headers: {
+					Authorization: `Bearer ${env.LOGSNAG_TOKEN}`,
+					'Content-Type': 'application/json'
+				}
+			}).finally(() => {
+				throw e;
+			});
 		});
+
 		ctx.waitUntil(run_promise);
 	}
 }
