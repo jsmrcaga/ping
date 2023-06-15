@@ -12,8 +12,8 @@ export default {
 				body: JSON.stringify({
 					project: 'ping',
 					channel: 'pinger-errors',
-					event: error.message || 'Unknown error',
-					description: error.stack,
+					event: e.message || 'Unknown error',
+					description: e.stack,
 					notify: true,
 				}),
 				headers: {
