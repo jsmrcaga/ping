@@ -5,7 +5,7 @@ const { Model } = require('db');
 
 const app = new App(router);
 
-app.error(error => {
+app.error((error, request, params, { env }) => {
 	console.error(error);
 	if(error instanceof Response) {
 		return error;
@@ -15,7 +15,22 @@ app.error(error => {
 		return new Response(null, { status: 404 });
 	}
 
-	return new Response(null, { status: 500 });
+	return fetch('https://api.logsnag.com/v1/log', {
+		method: 'POST',
+		body: JSON.stringify({
+			project: 'ping',
+			channel: 'errors',
+			event: error.message || 'Unknown error',
+			description: error.stack,
+			notify: true,
+		}),
+		headers: {
+			Authorization: `Bearer ${env.LOGSNAG_TOKEN}`,
+			'Content-Type': 'application/json'
+		}
+	}).finally(() => {
+		return new Response(null, { status: 500 });
+	});
 });
 
 // D1 only works in module workers....
