@@ -173,7 +173,7 @@ class Page extends Model {
 			VALUES (?, ?, ?)
 		`;
 
-		return this.run(query, title, host, JSON.stringify(sections));
+		return this.run(query, host, title, JSON.stringify(sections));
 	}
 }
 
