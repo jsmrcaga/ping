@@ -26,22 +26,11 @@ class MonitorCheck extends Model {
 
 	static get_insert_arg_list(instance) {
 		const { monitor_id, up, result, date, ping, error } = instance;
-		return [monitor_id, up, result, date, ping, error];
+		return [monitor_id, up, result || null, new Date(date).getTime(), ping || null, error || null];
 	}
 
 	static insert(monitor_check) {
-		const query = `
-			INSERT INTO monitor_check (
-				mc_monitor_id,
-				mc_up,
-				mc_result,
-				mc_date_ms,
-				mc_ping_ms,
-				mc_error
-			) VALUES (?, ?, ?, ?, ?, ?);
-		`;
-
-		return this.run(query, ...this.get_insert_arg_list(monitor_check));
+		return this.bulk_insert([monitor_check]);
 	}
 
 	static bulk_insert(monitor_checks) {

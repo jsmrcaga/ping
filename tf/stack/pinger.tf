@@ -3,7 +3,17 @@ resource "cloudflare_worker_script" "pinger_worker" {
   name = "ping_pinger"
   content = file("./dummy.js")
 
-  module = false
+  module = true
+
+  dynamic "secret_text_binding" {
+    for_each = var.cloudflare.api_environment
+    iterator = env
+
+    content {
+      name = env.key
+      text = env.value
+    }
+  }
 
   # For D1
   # service_binding {
