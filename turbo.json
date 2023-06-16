@@ -1,6 +1,10 @@
 {
 	"$schema": "https://turbo.build/schema.json",
 	"pipeline": {
+		"test": {
+			"cache": false,
+			"persistent": false
+		},
 		"build": {
 			"cache": true,
 			"persistent": false
