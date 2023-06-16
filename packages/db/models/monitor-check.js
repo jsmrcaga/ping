@@ -26,7 +26,15 @@ class MonitorCheck extends Model {
 
 	static get_insert_arg_list(instance) {
 		const { monitor_id, up, result, date, ping, error } = instance;
-		return [monitor_id, up, result || null, new Date(date).getTime(), ping || null, error || null];
+		const result_cast = (result instanceof Object ? JSON.stringify(result) : result) || null;
+		return [
+			monitor_id,
+			up ? 1 : 0,
+			result_cast,
+			new Date(date).getTime(),
+			ping || null,
+			error || null
+		];
 	}
 
 	static insert(monitor_check) {
