@@ -31,7 +31,8 @@ const STATUS_NAME = {
 
 export const Section = ({ from, to, section, monitors }) => {
 	const { title, components } = section;
-	const section_monitors = Array.from(new Set(components.map(({ monitors }) => monitors)));
+	const all_monitors = components.map(({ monitors }) => monitors).flat();
+	const section_monitors = Array.from(new Set(all_monitors));
 
 	const status = useStatus({
 		up: section_monitors.every(monitor => monitor.currently_up)
