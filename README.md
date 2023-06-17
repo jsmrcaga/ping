@@ -1,7 +1,10 @@
 # Ping
 A simple status page built over Cloudflare Workers, D1 and Vercel (Next.js 13).
 
-It has soe nice little features:
+Since this project started as a way to test new tech, it is not very tidy or properly split into components,
+but it works nicely!
+
+It has some nice little features:
 
 ## Features
 - Host dependent
