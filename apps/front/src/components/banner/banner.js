@@ -103,6 +103,8 @@ export function MainBanner({ monitors=[], incidents=[], scheduled_maintenance=[]
 
 	const status = useStatus({ up: all_up, incidents: current_incidents, maintenance: current_maintenance });
 
+	const show_incidents = current_incidents.length || current_maintenance.length;
+
 	return (
 		<Box className={Styles.banner}>
 			<div className={Styles.title}>
@@ -110,30 +112,33 @@ export function MainBanner({ monitors=[], incidents=[], scheduled_maintenance=[]
 				<h2>{ STATUS_MESSAGE[status] || STATUS_MESSAGE.up }</h2>
 			</div>
 
-			<div className={Styles['banner-incidents']}>
-				{
-					current_incidents.map(incident => {
-						return (
-							<Incident
-								key={incident.id}
-								incident={incident}
-								monitors={monitors}
-							/>
-						);
-					})
-				}
-				{
-					current_maintenance.map(incident => {
-						return (
-							<Incident
-								key={incident.id}
-								incident={incident}
-								monitors={monitors}
-							/>
-						);
-					})
-				}
-			</div>
+			{
+				show_incidents &&
+				<div className={Styles['banner-incidents']}>
+					{
+						current_incidents.map(incident => {
+							return (
+								<Incident
+									key={incident.id}
+									incident={incident}
+									monitors={monitors}
+								/>
+							);
+						})
+					}
+					{
+						current_maintenance.map(incident => {
+							return (
+								<Incident
+									key={incident.id}
+									incident={incident}
+									monitors={monitors}
+								/>
+							);
+						})
+					}
+				</div>
+			}
 		</Box>
 	);
 }
