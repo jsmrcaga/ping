@@ -165,7 +165,7 @@ class Page extends Model {
 		sections.forEach(section => Section.validate(section));
 	}
 
-	static insert({ title, host, sections }) {
+	static insert({ title, host, sections, monitor_ids=null }) {
 		this.validate({ title, host, sections });
 
 		const query = `
@@ -173,7 +173,23 @@ class Page extends Model {
 			VALUES (?, ?, ?)
 		`;
 
-		return this.run(query, host, title, JSON.stringify(sections));
+		if(!monitor_ids) {
+			return this.run(query, host, title, JSON.stringify(sections));
+		}
+
+		const page = this.prepare(query, host, title, JSON.stringify(sections));
+		const p2m_values = new Array(monitor_ids.length).fill('(?, ?)').join(', ');
+		const p2m_bindings = monitor_ids.map(id => [host, id]).flat();
+		const p2m_query = `
+			INSERT INTO page_monitor_m2m (page_host, monitor_id)
+			VALUES ${p2m_values}
+		`;
+		const monitors = this.prepare(p2m_query, ...p2m_bindings);
+
+		return this.batch([
+			page,
+			monitors
+		]);
 	}
 }
 

@@ -68,7 +68,7 @@ router.get('/:endpoint/incidents/:id', (request, { endpoint, id }) => {
 
 router.post('/pages', auth(request => {
 	return request.json().then(data => {
-		const { sections, host, title } = data;
+		const { sections, host, title, monitors } = data;
 
 		try {
 			Page.validate({ sections, host, title });
@@ -83,10 +83,11 @@ router.post('/pages', auth(request => {
 			});
 		}
 
-		return Page.create({
+		const page_promise = Page.create({
 			sections,
 			host,
-			title
+			title,
+			monitor_ids: monitors
 		});
 	});
 }));
