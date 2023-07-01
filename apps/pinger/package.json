@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "db": "*",
+    "cf": "*",
     "webpack": "^5.83.1",
     "webpack-cli": "^5.1.1"
   },

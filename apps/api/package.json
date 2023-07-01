@@ -12,6 +12,7 @@
   "dependencies": {
     "@control/cloudflare-workers-router": "^0.1.1-b",
     "db": "*",
+    "cf": "*",
     "webpack": "^5.83.1",
     "webpack-cli": "^5.1.1"
   },

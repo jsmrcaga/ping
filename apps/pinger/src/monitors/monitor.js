@@ -27,24 +27,25 @@ class Monitor {
 		throw new Error('Override this method');
 	}
 
+	#run() {
+		try {
+			let run = this.run();
+			if(run instanceof Promise) {
+				return run;
+			}
+
+			return Promise.resolve(run);
+		} catch(e) {
+			return Promise.reject(e);
+		}
+	}
+
 	test() {
 		const then_ms = Date.now();
-		// Instanciate with ms in case 1ms happened between the two
+		// Instanciate with then_ms in case 1ms happened between the two
 		const now = new Date(then_ms).toISOString();
 
-		const run = new Promise((resolve, reject) => {
-			try {
-				const r = this.run();
-				if(r instanceof Promise) {
-					return r.then(res => resolve(res)).catch(e => reject(e));
-				}
-				return resolve(r);
-			} catch(e) {
-				reject(e);
-			}
-		});
-
-		return run.then(result => {
+		return this.#run().then(result => {
 			const ping = Date.now() - then_ms;
 
 			return {
