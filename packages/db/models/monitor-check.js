@@ -3,7 +3,7 @@ const { Model } = require('./model');
 class MonitorCheck extends Model {
 	static TABLE = 'monitor_check';
 
-	constructor({ monitor_id, up, result, date, ping, error }) {
+	constructor({ monitor_id, up, result, date, ping, error, region=null }) {
 		super();
 		this.monitor_id = monitor_id;
 		this.up = up;
@@ -11,9 +11,10 @@ class MonitorCheck extends Model {
 		this.date = date;
 		this.ping = ping;
 		this.error = error;
+		this.region = region;
 	}
 
-	static instanciate({ mc_monitor_id, mc_up, mc_result, mc_date_ms, mc_ping_ms, mc_error}) {
+	static instanciate({ mc_monitor_id, mc_up, mc_result, mc_date_ms, mc_ping_ms, mc_error, mc_region }) {
 		return new this({
 			up: Boolean(mc_up),
 			error: mc_error,
@@ -21,11 +22,12 @@ class MonitorCheck extends Model {
 			monitor_id: mc_monitor_id,
 			date: new Date(mc_date_ms),
 			ping: mc_ping_ms,
+			region: mc_region
 		});
 	}
 
 	static get_insert_arg_list(instance) {
-		const { monitor_id, up, result, date, ping, error } = instance;
+		const { monitor_id, up, result, date, ping, error, region } = instance;
 		const result_cast = (result instanceof Object ? JSON.stringify(result) : result) || null;
 		return [
 			monitor_id,
@@ -33,7 +35,8 @@ class MonitorCheck extends Model {
 			result_cast,
 			new Date(date).getTime(),
 			ping || null,
-			error || null
+			error || null,
+			region || null
 		];
 	}
 
@@ -42,7 +45,7 @@ class MonitorCheck extends Model {
 	}
 
 	static bulk_insert(monitor_checks) {
-		const values_placeholders = new Array(monitor_checks.length).fill('(?, ?, ?, ?, ?, ?)').join(', ');
+		const values_placeholders = new Array(monitor_checks.length).fill('(?, ?, ?, ?, ?, ?, ?)').join(', ');
 
 		const query = `
 			INSERT INTO monitor_check (
@@ -51,7 +54,8 @@ class MonitorCheck extends Model {
 				mc_result,
 				mc_date_ms,
 				mc_ping_ms,
-				mc_error
+				mc_error,
+				mc_region
 			) VALUES ${values_placeholders};
 		`;
 

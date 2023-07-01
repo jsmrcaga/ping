@@ -1,0 +1,2 @@
+ALTER TABLE monitor_check ADD COLUMN
+	mc_region TEXT DEFAULT NULL;
