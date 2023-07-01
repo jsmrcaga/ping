@@ -7,6 +7,8 @@ const {
 } = require('./monitors');
 const { Incident } = require('./incidents/incident');
 
+const ClouflareRegion = require('cf');
+
 const MONITOR_TYPES = {
 	'http': HTTPMonitor,
 	// 'tcp': TCPMonitor,
@@ -30,9 +32,14 @@ class MonitorManager {
 	}
 
 	run() {
+		// get current region
 		// gets monitors in
 		// returns monitors to save out + data
-		return Monitor.all().then(monitors => {
+		let cf_region;
+		return ClouflareRegion.region().then(region => {
+			cf_region = region;
+			return Monitor.all();
+		}).then(monitors => {
 			if(!monitors?.length) {
 				return;
 			}
@@ -70,7 +77,8 @@ class MonitorManager {
 					result,
 					error: error?.message || null,
 					ping,
-					date: new Date(date).getTime()
+					date: new Date(date).getTime(),
+					region: cf_region?.colo || null
 				});
 			});
 

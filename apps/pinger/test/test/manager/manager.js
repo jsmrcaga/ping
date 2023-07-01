@@ -163,6 +163,8 @@ describe('Manager', () => {
 				assert.strictEqual(m2_check.up, false, 'Monitor 2 up');
 				assert.strictEqual(m1_check.date.getTime(), frozen_date.getTime());
 				assert.strictEqual(m2_check.date.getTime(), frozen_date.getTime());
+				assert(m1_check.region);
+				assert(m2_check.region);
 
 				const m1 = monitors.find(({ id }) => id === 'monitor-1');
 				const m2 = monitors.find(({ id }) => id === 'monitor-2');
