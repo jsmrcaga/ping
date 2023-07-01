@@ -10,6 +10,8 @@ module ping_repo {
 
   topics = ["management", "infrastructure", "reporting", "status"]
 
+  visibility = "public"
+
   actions = {
     secrets = {
       CF_ACCOUNT_ID = var.cloudflare.account_id
