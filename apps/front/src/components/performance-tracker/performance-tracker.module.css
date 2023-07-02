@@ -88,3 +88,16 @@ div:not(.performance-tracker-group) ~ .performance-tracker-group {
 	-webkit-mask-image: linear-gradient(to right, transparent 50px, black);
 	mask-image: linear-gradient(to right, transparent 50px, black);
 }
+
+
+@media only screen and (max-width: 550px) {
+	/* 1 is too small on phone */
+	.performance-tracker.w-1 {
+		grid-column: span 2;
+	}
+
+	/* And 3 would leave only 1 space */
+	.performance-tracker.w-3 {
+		grid-column: span 4;
+	}
+}

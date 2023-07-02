@@ -168,8 +168,10 @@ export function Monitor({ from, to, monitor }) {
 	return (
 		<div className={Styles.monitor}>
 			<div className={Styles.title}>
-				<StatusIcon className={Styles['title-icon']} status={status} small/>
-				<span>{ monitor.name }</span>
+				<span className={Styles['title-container']}>
+					<StatusIcon className={Styles['title-icon']} status={status} small/>
+					<span>{ monitor.name }</span>
+				</span>
 				<span className={Styles.endpoint}>{ monitor.config?.endpoint }</span>
 
 				<span className={Styles['full-uptime']}>

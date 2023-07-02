@@ -78,13 +78,30 @@
 		border-top-left-radius: 5px;
 		border-bottom-left-radius: 5px;
 	}
-}
 
+	.title .endpoint {
+		display: none;
+	}
+
+	.title {
+		flex-direction: column;
+		align-items: flex-start !important;
+	}
+
+	.title .full-uptime {
+		margin-left: unset !important;
+	}
+}
 
 
 .title {
 	display: flex;
 	align-items: flex-end;
+}
+
+.title-container {
+	display: flex;
+	align-items: center;
 }
 
 .title-icon {

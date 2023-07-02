@@ -43,8 +43,6 @@ export function Chart({ points, unit }) {
 		})
 	}, [points]);
 
-	console.log({ data });
-
 	return (
 		<ResponsiveContainer width="100%" height="100%">
 			<AreaChart data={data} margin={{ top: 10, left: 0, right: 0, bottom: 0 }}>
