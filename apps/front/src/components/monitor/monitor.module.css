@@ -1,5 +1,5 @@
 .monitor:not(:first-child) {
-	margin-top: 2rem;
+	margin-top: 1rem;
 }
 
 .detail {

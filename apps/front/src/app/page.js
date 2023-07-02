@@ -18,7 +18,7 @@ const get_page_data = () => {
 export default function Home() {
 	const page_data = get_page_data();
 
-	return page_data.then(({ sections, title, monitors, incidents, scheduled_maintenance, from, to }) => {
+	return page_data.then(({ sections, title, monitors, performance_trackers, incidents, scheduled_maintenance, from, to }) => {
 		return (
 			<>
 				{ title && <Title>{ title }</Title> }
@@ -36,6 +36,7 @@ export default function Home() {
 								key={section.title || index}
 								section={section}
 								monitors={monitors}
+								performance_trackers={performance_trackers}
 							/>
 						})
 					}

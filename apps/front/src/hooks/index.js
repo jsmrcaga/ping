@@ -1,5 +1,7 @@
 export * from './classnames';
 
+export * from './performance';
+
 export const useStatus = ({ up, incidents=[], maintenance=[] }) => {
 	if(!up) {
 		return 'down';
