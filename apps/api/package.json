@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "migrate": "wrangler d1 execute ping --local --file",
-    "start": "wrangler dev"
+    "start": "wrangler dev",
+    "seed": "(rm -r ./.wrangler/state/v3/d1 || true) && ./dev/seed.sh"
   },
   "dependencies": {
     "@control/cloudflare-workers-router": "^0.1.1-b",
