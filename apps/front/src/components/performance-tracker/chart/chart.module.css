@@ -1,0 +1,25 @@
+.chart-tooltip {
+	z-index: 5;
+	background-color: var(--dark-3);
+	border: 1px solid var(--dark-1);
+	border-radius: 8px;
+
+	min-width: 150px;
+	font-size: 0.85rem;
+	text-align: left;
+	padding: 15px 20px;
+
+	box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.2);
+	transition: opacity 0.2s ease-in-out;
+}
+
+.chart-tooltip .value {
+	font-size: 1rem;
+	font-weight: bold;
+}
+
+.chart-tooltip .value span {
+	font-size: 0.85rem;
+	font-weight: normal;
+	margin-left: 0.5rem;
+}

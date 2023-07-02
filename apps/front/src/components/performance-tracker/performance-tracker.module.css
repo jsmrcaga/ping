@@ -14,13 +14,20 @@ div:not(.performance-tracker-group) ~ .performance-tracker-group {
 }
 
 .performance-tracker {
-	padding:  15px 20px;
 	border: 1px solid var(--dark-4);
 	border-radius: 10px;
 	background-color: var(--dark-3);
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-end;
+	position: relative;
+}
+
+.performance-tracker > div.padding {
+	padding:  15px 20px;
+	/* To make it above the chart */
+	z-index: 1;
+	pointer-events: none;
 }
 
 .performance-tracker .value {
@@ -39,7 +46,7 @@ div:not(.performance-tracker-group) ~ .performance-tracker-group {
 	font-weight: bold;
 	font-size: 1.1rem;
 	margin-top: 0.5rem;
-	color: var(--text-3);
+	color: var(--text-2);
 }
 
 .performance-tracker .description {
@@ -69,4 +76,15 @@ div:not(.performance-tracker-group) ~ .performance-tracker-group {
 
 .performance-tracker.nok .value {
 	color: var(--red-primary);
+}
+
+/* Chart */
+.performance-tracker .chart {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	-webkit-mask-image: linear-gradient(to right, transparent 50px, black);
+	mask-image: linear-gradient(to right, transparent 50px, black);
 }
