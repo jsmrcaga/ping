@@ -11,6 +11,8 @@ const MONTH_IN_MS = 1000 * 60 * 60 * 24 * 31;
 class Section {
 	static validate_component(component) {
 		const  { title, monitors, performance_trackers, type } = component;
+		// performance tracker:
+		// { id: string; group: number; chart: boolean }
 		if(!monitors?.length && !performance_trackers?.length) {
 			throw new Error('A component needs at least one monitor or performance tracker');
 		}

@@ -149,9 +149,10 @@ describe('Models', () => {
 				assert('perf-tracker-1' in result);
 				assert(!('perf-tracker-2' in result));
 
+				assert(result['perf-tracker-1'].name === 'Tracker 1');
 				const points = result['perf-tracker-1'].points;
 				// We set points every 15 min and we aggregate every 30 min
-				// should be 50 points
+				// should be 50/51 points
 				assert(points.length == 51, `Expected length 51, got ${points.length}`);
 				// TODO: right now we round "down", so 10h45 became 10h30.
 				assert(points[0].agg_date === '2023-01-01T10:30:00.000Z', `Expected '2023-01-01T10:30:00.000Z', got ${points[0].agg_date}`);
