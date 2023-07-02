@@ -3,6 +3,7 @@ const { MonitorCheck } = require('./models/monitor-check');
 const { Monitor } = require('./models/monitor');
 const { Page } = require('./models/page');
 const { Incident } = require('./models/incident');
+const { PerformanceTracker } = require('./models/performance-tracker');
 
 module.exports = {
 	Model,
@@ -10,11 +11,13 @@ module.exports = {
 	Monitor,
 	Page,
 	Incident,
+	PerformanceTracker,
 
 	models: [
 		MonitorCheck,
 		Monitor,
 		Page,
-		Incident
+		Incident,
+		PerformanceTracker
 	],
 };

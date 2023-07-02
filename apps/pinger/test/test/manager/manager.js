@@ -5,7 +5,7 @@ const { Model, Monitor, MonitorCheck, Incident } = require('db');
 
 const { date_freezer } = require('../../mocks/date');
 const { MockDB } = require('../../mocks/mock-db');
-const { use_db, db_promise } = require('../../mocks/db');
+const { use_db } = require('../../mocks/db');
 
 const { MonitorManager } = require('../../../src/manager');
 

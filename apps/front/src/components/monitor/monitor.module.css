@@ -72,6 +72,12 @@
 	.point:hover .monitor-popup {
 		display: none !important;
 	}
+
+	/* So that mobile shows border radius on "first" point */
+	.point:nth-child(61) {
+		border-top-left-radius: 5px;
+		border-bottom-left-radius: 5px;
+	}
 }
 
 
