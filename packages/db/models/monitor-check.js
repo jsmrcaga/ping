@@ -65,7 +65,7 @@ class MonitorCheck extends Model {
 }
 
 class AggregatedMonitorCheck extends Model {
-	constructor({ monitor_id, up, result, date, ping, error, agg_up, agg_date, agg_ping }) {
+	constructor({ monitor_id, agg_up, agg_date, agg_ping }) {
 		super();
 		this.monitor_id = monitor_id;
 		this.agg_up = agg_up;

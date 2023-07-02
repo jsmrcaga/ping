@@ -3,15 +3,16 @@ const { Model } = require('./model');
 const { Monitor } = require('./monitor');
 const { MonitorCheck } = require('./monitor-check');
 const { AggregatedMonitorCheck } = require('./monitor-check');
+const { PerformanceTracker } = require('./performance-tracker');
 
 const MONTH_IN_MS = 1000 * 60 * 60 * 24 * 31;
 
 // For reference & validation
 class Section {
 	static validate_component(component) {
-		const  { title, monitors, type } = component;
-		if(!monitors?.length) {
-			throw new Error('A component needs at least one monitor');
+		const  { title, monitors, performance_trackers, type } = component;
+		if(!monitors?.length && !performance_trackers?.length) {
+			throw new Error('A component needs at least one monitor or performance tracker');
 		}
 	}
 
@@ -40,9 +41,10 @@ class Page extends Model {
 
 		// Not on DB, filled up later
 		this.monitors = [];
+		this.performance_trackers = [];
 	}
 
-	static with_monitors({ host, from_date=Date.now() - (MONTH_IN_MS * 3) }) {
+	static with_monitors({ host, from_date=Date.now() - (MONTH_IN_MS * 3), perf_tracker_aggregate_min=15 }) {
 		const date_ms = new Date(from_date).getTime();
 
 		const page_query = 'SELECT * FROM page WHERE page.p_host = ?';
@@ -86,6 +88,12 @@ class Page extends Model {
 		`;
 		const last_checks_promise = MonitorCheck.query(last_checks_query, host);
 
+		const performance_query = PerformanceTracker.for_page({
+			host,
+			from_date_ms: date_ms,
+			aggregate_min: perf_tracker_aggregate_min
+		});
+
 		const monitors_promise = this.raw(checks_query, host, date_ms.toString()).then(({ success, results }) => {
 			if(!success) {
 				throw new Error('Could not get monitors for page');
@@ -109,8 +117,9 @@ class Page extends Model {
 			return monitors_with_checks;
 		});
 
-		return Promise.all([page_promise, monitors_promise, last_checks_promise]).then(([page, monitors, last_checks]) => {
+		return Promise.all([page_promise, monitors_promise, last_checks_promise, performance_query]).then(([page, monitors, last_checks, performance_trackers]) => {
 			page.monitors = monitors;
+			page.performance_trackers = performance_trackers;
 			page.from = new Date(from_date).toISOString();
 			page.to = new Date().toISOString();
 
@@ -165,7 +174,7 @@ class Page extends Model {
 		sections.forEach(section => Section.validate(section));
 	}
 
-	static insert({ title, host, sections, monitor_ids=null }) {
+	static insert({ title, host, sections=[], monitor_ids=null }) {
 		this.validate({ title, host, sections });
 
 		const query = `
@@ -173,7 +182,7 @@ class Page extends Model {
 			VALUES (?, ?, ?)
 		`;
 
-		if(!monitor_ids) {
+		if(!monitor_ids?.length) {
 			return this.run(query, host, title, JSON.stringify(sections));
 		}
 
