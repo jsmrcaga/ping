@@ -1,0 +1,72 @@
+.performance-tracker-group {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-gap: 1rem;
+}
+
+.performance-tracker-group:not(:last-child) {
+	margin-bottom: 1rem;
+}
+
+/* Specific use case when we are mixing monitors & performance trackers */
+div:not(.performance-tracker-group) ~ .performance-tracker-group {
+	margin-top: 1rem;
+}
+
+.performance-tracker {
+	padding:  15px 20px;
+	border: 1px solid var(--dark-4);
+	border-radius: 10px;
+	background-color: var(--dark-3);
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+}
+
+.performance-tracker .value {
+	font-weight: bold;
+	font-size: 1.6rem;
+}
+
+.performance-tracker .value span {
+	font-weight: normal;
+	font-size: 1rem;
+	color: var(--text-3);
+	margin-left: 0.5rem;
+}
+
+.performance-tracker .title {
+	font-weight: bold;
+	font-size: 1.1rem;
+	margin-top: 0.5rem;
+	color: var(--text-3);
+}
+
+.performance-tracker .description {
+	font-size: 0.85rem;
+	color: var(--text-4);
+}
+
+.performance-tracker.w-1 {
+	grid-column: span 1;
+}
+
+.performance-tracker.w-2 {
+	grid-column: span 2;	
+}
+
+.performance-tracker.w-3 {
+	grid-column: span 3;
+}
+
+.performance-tracker.w-4 {
+	grid-column: span 4;
+}
+
+.performance-tracker.ok .value {
+	color: var(--green-primary);
+}
+
+.performance-tracker.nok .value {
+	color: var(--red-primary);
+}

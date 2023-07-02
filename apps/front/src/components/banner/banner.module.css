@@ -38,6 +38,10 @@
 	display: block;
 }
 
+.incident-link:not(:last-child) {
+	margin-bottom: 1rem;
+}
+
 .incident {
 	padding: 15px 15px;
 
@@ -54,11 +58,6 @@
 
 .incident:not(:first-child) {
 	margin-top: 20px;
-}
-
-
-.incident:not(:last-child) {
-	margin-bottom: 1rem;
 }
 
 .incident:hover {
