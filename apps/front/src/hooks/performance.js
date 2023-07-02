@@ -34,7 +34,6 @@ export function usePerformanceStatus({
 	nok
 }) {
 	return React.useMemo(() => {
-		console.log('Comparing', { value, ok, nok });
 		if(!ok && !nok) {
 			return null;
 		}
