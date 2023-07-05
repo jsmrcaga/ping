@@ -19,7 +19,7 @@ function PerformanceTracker({ tracker: { id, name, description, unit, points, wi
 		return null;
 	}
 
-	const [latest_point] = points;
+	const [latest_point] = points.toReversed();
 
 	width = width ?? 4;
 
@@ -36,7 +36,7 @@ function PerformanceTracker({ tracker: { id, name, description, unit, points, wi
 		})}>
 			<div className={Styles['padding']}>
 				<div className={Styles['value']}>
-					{latest_point.agg_value}
+					{Math.round(latest_point.agg_value)}
 					{unit && <span>{unit}</span>}
 				</div>
 				<div className={Styles['title']}>{ name }</div>

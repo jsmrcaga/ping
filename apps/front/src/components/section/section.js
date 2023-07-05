@@ -23,13 +23,16 @@ const SectionComponent = ({ from, to, component, monitors, performance_trackers 
 				return null;
 			}
 
+			const tracker = performance_trackers[id];
+
+			// Make sure we prioritize page config
 			return {
-				...performance_trackers[id],
-				chart,
-				width,
-				unit,
-				nok,
-				ok
+				...tracker,
+				chart: chart || tracker.display_config?.chart,
+				width: width || tracker.display_config?.width,
+				unit: unit || tracker.display_config?.unit,
+				nok: nok || tracker.display_config?.nok,
+				ok: ok || tracker.display_config?.ok
 			};
 		}).filter(e => e);
 

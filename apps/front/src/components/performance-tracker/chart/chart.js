@@ -31,7 +31,7 @@ function ChartTooltip({ payload, unit }) {
 
 export function Chart({ points, unit }) {
 	const data = React.useMemo(() => {
-		const date_formatter = new Intl.DateTimeFormat(window.navigator.language, {
+		const date_formatter = new Intl.DateTimeFormat(globalThis.navigator?.language, {
 			dateStyle: 'long',
 			timeStyle: 'short'
 		});
