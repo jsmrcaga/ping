@@ -5,14 +5,14 @@ workers_dev = false
 
 compatibility_date = "2023-05-12"
 
+[[d1_databases]]
+binding = "PING_DB"
+database_name = "ping"
+database_id = "922e1eb2-3238-43e8-a1e4-e9315ebc6116"
+
 # So that we don't write test:1234 in prod
 [env.dev]
 [env.dev.vars]
 ADMIN_USERNAME = "test"
 ADMIN_KEY = "1234"
 
-
-[[d1_databases]]
-binding = "PING_DB"
-database_name = "ping"
-database_id = "922e1eb2-3238-43e8-a1e4-e9315ebc6116"

@@ -7,6 +7,7 @@ const app = new App(router);
 
 app.error((error, request, params, { env }) => {
 	console.error(error);
+
 	if(error instanceof Response) {
 		return error;
 	}
@@ -28,7 +29,9 @@ app.error((error, request, params, { env }) => {
 			Authorization: `Bearer ${env.LOGSNAG_TOKEN}`,
 			'Content-Type': 'application/json'
 		}
-	}).finally(() => {
+	}).then(() => {
+		return new Response(null, { status: 500 });
+	}).catch(e => {
 		return new Response(null, { status: 500 });
 	});
 });
@@ -39,7 +42,11 @@ export default {
 		// Luckily app.run returns a promise
 		try {
 			Model.DB = env.PING_DB;
-			return app.run({ request, env }).catch(e => {
+			if(!Model.DB) {
+				throw new Error('Cannot bootstrap application, no DB');
+			}
+
+			return app.run({ request, env, context }).catch(e => {
 				return new Response(null, { status: 500 });
 			});
 		} catch(e) {
