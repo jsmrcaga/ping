@@ -35,18 +35,25 @@ class Section {
 class Page extends Model {
 	static TABLE = 'page';
 
-	constructor({ host, monitors, title, sections }) {
+	constructor({ host, monitors, title, sections, performance }) {
 		super();
 		this.host = host;
 		this.title = title;
 		this.sections = sections;
+		this.performance = performance;
 
 		// Not on DB, filled up later
 		this.monitors = [];
 		this.performance_trackers = [];
 	}
 
-	static with_monitors({ host, from_date=Date.now() - (MONTH_IN_MS * 3), perf_tracker_aggregate_min=15 }) {
+	static find({ host }) {
+		const page_query = 'SELECT * FROM page WHERE page.p_host = ?';
+		return this.get(page_query, host);
+	}
+
+	static with_monitors({ host, from_date=Date.now() - (MONTH_IN_MS * 3), perf_tracker_aggregate_min=1440 }) {
+		// 1440 min = 24h => 1 point per day
 		const date_ms = new Date(from_date).getTime();
 
 		const page_query = 'SELECT * FROM page WHERE page.p_host = ?';
@@ -145,11 +152,26 @@ class Page extends Model {
 		});
 	}
 
-	static instanciate({ p_host, p_title, p_sections_json }) {
+	static instanciate({ p_host, p_title, p_sections_json, p_performance_json }) {
+		let sections = [];
+		let performance = [];
+		try {
+			sections = JSON.parse(p_sections_json);
+		} catch(e) {
+			console.error(e);
+		}
+
+		try {
+			performance = JSON.parse(p_performance_json);
+		} catch(e) {
+			console.error(e);
+		}
+
 		return new this({
 			host: p_host,
 			title: p_title,
-			sections: JSON.parse(p_sections_json)
+			sections,
+			performance
 		});
 	}
 
@@ -164,7 +186,7 @@ class Page extends Model {
 		return this.get(page_query, host);
 	}
 
-	static validate({ title, host, sections=[] }) {
+	static validate({ title, host, sections=[], performance=null }) {
 		if(!title || !host) {
 			throw new Error('title and host are mandatory');
 		}
@@ -174,21 +196,22 @@ class Page extends Model {
 		}
 
 		sections.forEach(section => Section.validate(section));
+		performance?.forEach(section => Section.validate(section));
 	}
 
-	static insert({ title, host, sections=[], monitor_ids=null }) {
+	static insert({ title, host, sections=[], performance=null, monitor_ids=null }) {
 		this.validate({ title, host, sections });
 
 		const query = `
-			INSERT INTO page (p_host, p_title, p_sections_json)
-			VALUES (?, ?, ?)
+			INSERT INTO page (p_host, p_title, p_sections_json, p_performance_json)
+			VALUES (?, ?, ?, ?)
 		`;
 
 		if(!monitor_ids?.length) {
-			return this.run(query, host, title, JSON.stringify(sections));
+			return this.run(query, host, title, JSON.stringify(sections), JSON.stringify(performance));
 		}
 
-		const page = this.prepare(query, host, title, JSON.stringify(sections));
+		const page = this.prepare(query, host, title, JSON.stringify(sections), JSON.stringify(performance));
 		const p2m_values = new Array(monitor_ids.length).fill('(?, ?)').join(', ');
 		const p2m_bindings = monitor_ids.map(id => [host, id]).flat();
 		const p2m_query = `

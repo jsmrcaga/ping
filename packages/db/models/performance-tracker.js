@@ -17,30 +17,84 @@ class AggregatedPerformancePoint extends Model {
 class PerformanceTracker extends Model {
 	static TABLE = 'performance_tracker';
 
-	static instanciate({ pt_id, pt_name, pt_description }) {
+	static instanciate({ pt_id, pt_name, pt_project, pt_display_config, pt_description }) {
+		let display_config = null;
+		try {
+			display_config = JSON.parse(pt_display_config);
+		} catch(e) {
+			console.error(e);
+		}
+
 		return new this({
 			id: pt_id,
 			name: pt_name,
 			description: pt_description,
-			points: []
+			project: pt_project,
+			display_config,
+			points: [],
 		});
 	}
 
-	static insert({ id, name, description=null, page_hosts = [] }) {
+	static validate({ id, name, description, project, display_config, page_hosts }) {
+		if(!id) {
+			throw new Error('Tracker id is mandatory');
+		}
+
+		if(!name && !description) {
+			throw new Error('One of name or description is required');
+		}
+
+		if(display_config) {
+			// TODO: validate display config
+			if(!(display_config instanceof Object)) {
+				throw new Error('Display config must be valid JSON value')
+			}
+
+			try {
+				JSON.stringify(display_config);
+			} catch(e) {
+				throw new Error('Display config must be valid JSON value');
+			}
+		}
+	}
+
+	static validate_point({
+		date_ms,
+		value,
+		region,
+		tracker_id
+	} = {}) {
+		if(!tracker_id) {
+			throw new Error('Tracker ID is mandatory');
+		}
+
+		if(!date_ms || value === undefined) {
+			throw new Error('Value and date are required');
+		}
+
+		const d = new Date(date_ms);
+		if(Number.isNaN(d.getTime())) {
+			throw new Error('Invalid date');
+		}
+	}
+
+	static insert({ id, name, description=null, project=null, display_config=null, page_hosts = [] }) {
 		const query = `
 			INSERT INTO ${this.TABLE} (
 				pt_id,
 				pt_name,
-				pt_description
+				pt_description,
+				pt_project,
+				pt_display_config
 			)
-			VALUES (?, ?, ?)
+			VALUES (?, ?, ?, ?, ?)
 		`;
 
 		if(!page_hosts?.length) {
-			return this.run(query, id, name, description);
+			return this.run(query, id, name, description, project, JSON.stringify(display_config));
 		}
 
-		const tracker_query = this.prepare(query, id, name, description);
+		const tracker_query = this.prepare(query, id, name, description, project, JSON.stringify(display_config));
 		const p2t_values = new Array(page_hosts.length).fill('(?, ?)').join(', ');
 		const p2t_bindings = page_hosts.map(host => [host, id]).flat();
 		const p2t_query = `INSERT INTO page_performance_tracker_m2m (page_host, pt_id) VALUES ${p2t_values}`;

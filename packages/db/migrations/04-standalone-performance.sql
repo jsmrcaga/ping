@@ -1,7 +1,9 @@
 CREATE TABLE performance_tracker_new (
 	pt_id TEXT PRIMARY KEY,
 	pt_name TEXT NOT NULL,
-	pt_description TEXT
+	pt_description TEXT DEFAULT NULL,
+	pt_project TEXT DEFAULT NULL,
+	pt_display_config TEXT DEFAULT NULL
 );
 
 CREATE TABLE IF NOT EXISTS performance_point_new (
@@ -20,6 +22,8 @@ CREATE TABLE IF NOT EXISTS page_performance_tracker_m2m (
 	FOREIGN KEY (pt_id) REFERENCES performance_tracker_new (pt_id),
 	FOREIGN KEY (page_host) REFERENCES page (p_host)
 );
+
+ALTER TABLE page ADD COLUMN p_performance_json TEXT;
 
 DROP TABLE performance_tracker;
 DROP TABLE performance_point;
