@@ -6,3 +6,4 @@ export * from './header/header';
 export * from './title/title';
 export * from './timeline/timeline';
 export * from './tag/tag';
+export * from './performance-tracker/performance-tracker';

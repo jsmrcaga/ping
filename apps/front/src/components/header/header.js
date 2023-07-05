@@ -27,6 +27,13 @@ export function Header() {
 					Incident History
 				</Button>
 			</Link>
+			<Link href="/performance">
+				<Button
+					active={pathname === '/performance'}
+				>
+					Performance
+				</Button>
+			</Link>
 		</div>
 	);	
 }
