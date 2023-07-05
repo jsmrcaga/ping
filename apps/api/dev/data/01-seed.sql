@@ -1,4 +1,7 @@
-INSERT INTO page (p_host, p_title, p_sections_json) VALUES
+-- Enable foreign keys
+PRAGMA foreign_keys = ON;
+
+INSERT INTO page (p_host, p_title, p_sections_json, p_performance_json) VALUES
 	('localhost', 'Local Dashboard', '[{
 		"title": "Performance trackers",
 		"components": [{
@@ -10,7 +13,7 @@ INSERT INTO page (p_host, p_title, p_sections_json) VALUES
 				"width": 2,
 				"unit": "ms",
 				"ok": {
-					"lte": 150
+					"lte": 200
 				},
 				"nok": {
 					"gte": 300
@@ -33,7 +36,7 @@ INSERT INTO page (p_host, p_title, p_sections_json) VALUES
 			"performance_trackers": [{
 				"id": "perf-tracker-3",
 				"chart": false,
-				"width": null
+				"width": 4
 			}]
 		}]
 	}, {
@@ -66,6 +69,27 @@ INSERT INTO page (p_host, p_title, p_sections_json) VALUES
 			"title": null,
 			"monitors": ["jocolina-url-shortener"]
 		}]
+	}]', '[{
+		"title": "Virtual project 1",
+		"components": [{
+			"type": "performance-tracker",
+			"title": null,
+			"performance_trackers": [{
+				"id": "perf-tracker-3",
+				"width": 2
+			}, {
+				"id": "perf-tracker-2",
+				"chart": true,
+				"width": 2,
+				"unit": "ms2",
+				"ok": {
+					"lte": 150
+				},
+				"nok": {
+					"gte": 300
+				}
+			}]
+		}]
 	}]'),
 
 	('dev.jocolina.com', 'Jo Dashboard -- Local', '[{
@@ -79,7 +103,7 @@ INSERT INTO page (p_host, p_title, p_sections_json) VALUES
 			"title": null,
 			"monitors": ["jocolina-url-shortener"]
 		}]
-	}]');
+	}]', NULL);
 
 INSERT INTO monitor (m_id, m_type, m_name, m_config_json) VALUES
 	('jocolina-landing', 'http', 'Landing Page', '{"endpoint":"https://jocolina.com"}'),
@@ -95,10 +119,10 @@ INSERT INTO page_monitor_m2m (monitor_id, page_host) VALUES
 	('jocolina-url-shortener', 'dev.jocolina.com'),
 	('accounts-api', 'dev.jocolina.com');
 
-INSERT INTO performance_tracker (pt_id, pt_name, pt_description) VALUES
-	('perf-tracker-1', 'DB READ', 'Tracking DB READ Timing'),
-	('perf-tracker-2', 'DB WRITE', 'Tracking DB WRITE Timing'),
-	('perf-tracker-3', 'Cache hits', 'Latest Cache hits per minute');
+INSERT INTO performance_tracker (pt_id, pt_name, pt_description, pt_display_config) VALUES
+	('perf-tracker-1', 'DB READ', 'Tracking DB READ Timing', '{"chart": true, "ok": { "lt": 200 }, "nok": { "gte": 200 }}'),
+	('perf-tracker-2', 'DB WRITE', 'Tracking DB WRITE Timing', NULL),
+	('perf-tracker-3', 'Cache hits', 'Latest Cache hits per minute', '{"width": 2}');
 
 INSERT INTO page_performance_tracker_m2m (pt_id, page_host) VALUES
 	('perf-tracker-1', 'localhost'),

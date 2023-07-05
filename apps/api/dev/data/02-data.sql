@@ -43,7 +43,7 @@ INSERT INTO performance_point (pp_tracker_id, pp_date_ms, pp_value, pp_region) V
 	('perf-tracker-1', 1688326636502, 222, NULL),
 	('perf-tracker-1', 1688327536502, 398, NULL),
 	('perf-tracker-1', 1688328436502, 36, NULL),
-	('perf-tracker-1', 1688329336502, 308, NULL),
+	('perf-tracker-1', 1688329336502, 199, NULL),
 
 	('perf-tracker-2', 1688316736502, 132, NULL),
 	('perf-tracker-2', 1688317636502, 685, NULL),
