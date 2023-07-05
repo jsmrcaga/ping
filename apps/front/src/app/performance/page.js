@@ -41,12 +41,12 @@ export default function Performance() {
 		// Very important
 		const { performance: sections } = page;
 
-		let tracker_ids_in_sections = sections.map(({ components }) => {
+		let tracker_ids_in_sections = sections?.map(({ components }) => {
 			return components.map(({ performance_trackers=[]}) => {
 				return performance_trackers.map(({ id }) => id);
 			}).flat();
 		}).flat();
-		tracker_ids_in_sections = new Set(tracker_ids_in_sections);
+		tracker_ids_in_sections = new Set(tracker_ids_in_sections || []);
 
 		const trackers_without_section = trackers.filter(tracker => !tracker_ids_in_sections.has(tracker.id));
 
@@ -100,7 +100,7 @@ export default function Performance() {
 			<>
 				<Title>Performance Trackers</Title>
 				{
-					sections.map((section, i) => {
+					sections?.map((section, i) => {
 						return <Section
 							to={null}
 							from={null}
@@ -124,7 +124,8 @@ export default function Performance() {
 					})
 				}
 				{
-					standalone_trackers.map(tracker => <PerformanceTrackerGroup key={tracker.id} trackers={[tracker]}/>)
+					standalone_trackers.length &&
+					<PerformanceTrackerGroup trackers={standalone_trackers}/>
 				}
 				{
 					!trackers.length &&
