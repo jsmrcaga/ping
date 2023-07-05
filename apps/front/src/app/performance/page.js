@@ -124,7 +124,7 @@ export default function Performance() {
 					})
 				}
 				{
-					standalone_trackers.length &&
+					Boolean(standalone_trackers.length) &&
 					<PerformanceTrackerGroup trackers={standalone_trackers}/>
 				}
 				{
