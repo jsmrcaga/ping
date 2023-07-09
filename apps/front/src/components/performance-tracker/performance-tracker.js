@@ -19,7 +19,7 @@ function PerformanceTracker({ tracker: { id, name, description, unit, points, wi
 		return null;
 	}
 
-	const [latest_point] = points.toReversed();
+	const [latest_point] = [...points].reverse();
 
 	width = width ?? 4;
 

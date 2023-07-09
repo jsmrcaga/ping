@@ -60,7 +60,8 @@ export default function Performance() {
 				components: []
 			};
 
-			const [last_component] = agg[tracker.project].components.toReversed();
+			const reversed_components = [...agg[tracker.project].components].reverse();
+			const [last_component] = reversed_components;
 			if(!last_component || last_component.performance_trackers.length > 1) {
 				agg[tracker.project].components.push({
 					type: 'performance-tracker',
