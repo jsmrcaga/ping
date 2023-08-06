@@ -44,9 +44,12 @@ const SectionComponent = ({ from, to, component, monitors, performance_trackers 
 	return null;
 };
 
-export const Box = ({ className, children }) => {
+export const Box = ({ className, borderless=false, transparent=false, children }) => {
 	return (
-		<div className={classnames(className, Styles.box)}>
+		<div className={classnames(className, Styles.box, {
+			[Styles.borderless]: borderless,
+			[Styles.transparent]: transparent,
+		})}>
 			{children}
 		</div>
 	);
@@ -58,7 +61,7 @@ const STATUS_NAME = {
 	maintenance: 'Maintenance'
 };
 
-export const Section = ({ from, to, section, monitors, performance_trackers }) => {
+export const Section = ({ from, to, section, monitors, performance_trackers, ...rest }) => {
 	const { title, components } = section;
 	const all_monitor_ids = components.map(c => c.monitors).flat();
 	const section_monitors = Array.from(new Set(all_monitor_ids)).map(mid => monitors[mid]).filter(e => e);
@@ -70,19 +73,22 @@ export const Section = ({ from, to, section, monitors, performance_trackers }) =
 	});
 
 	return (
-		<Box>
+		<Box {...rest}>
 			<div>
-				<h2 className={Styles.title}>
-					<span>{title}</span>
+				{
+					Boolean(some_monitors || title) &&
+					<h2 className={Styles.title}>
+						<span>{title}</span>
 
-					{
-						some_monitors &&
-						<Tag className={Styles.tag}>
-							<StatusIcon className={Styles['title-icon']} status={status} small/>
-							<span className={Styles['tag-text']}>{ STATUS_NAME[status] }</span>
-						</Tag>
-					}
-				</h2>
+						{
+							some_monitors &&
+							<Tag className={Styles.tag}>
+								<StatusIcon className={Styles['title-icon']} status={status} small/>
+								<span className={Styles['tag-text']}>{ STATUS_NAME[status] }</span>
+							</Tag>
+						}
+					</h2>
+				}
 				{
 					components.map((component, index) => {
 						return <SectionComponent

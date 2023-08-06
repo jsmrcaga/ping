@@ -1,11 +1,10 @@
-import './globals.css';
-
-import Link from 'next/link';
+import '../globals.css';
+import './main.css';
 
 import { Manrope } from 'next/font/google';
 
-import { Header } from '../components';
-import { classnames } from '../hooks';
+import { Header } from '../../components';
+import { classnames } from '../../hooks';
 
 import Styles from './layout.module.css';
 
