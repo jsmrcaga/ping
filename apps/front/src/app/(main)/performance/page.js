@@ -1,11 +1,11 @@
-import { getHost } from '../../hooks/host';
+import { getHost } from '../../../hooks/host';
 import {
 	Title,
 	TimelineItem,
 	Incident,
 	PerformanceTrackerGroup,
 	Section
-} from '../../components';
+} from '../../../components';
 
 import Styles from './page.module.css';
 

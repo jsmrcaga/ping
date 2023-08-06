@@ -1,5 +1,5 @@
-import { getHost } from '../../hooks/host';
-import { Title, TimelineItem, Incident } from '../../components';
+import { getHost } from '../../../hooks/host';
+import { Title, TimelineItem, Incident } from '../../../components';
 
 import Styles from './page.module.css';
 

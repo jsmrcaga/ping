@@ -5,6 +5,14 @@
 	border: 1px solid var(--dark-3);
 }
 
+.box.transparent {
+	background: transparent;
+}
+
+.box.borderless {
+	border: none;
+}
+
 .box:not(:last-child) {
 	margin-bottom: 2rem;
 }

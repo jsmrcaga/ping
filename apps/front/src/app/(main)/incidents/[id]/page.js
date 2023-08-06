@@ -1,8 +1,8 @@
-import { getHost } from '../../../hooks/host';
+import { getHost } from '../../../../hooks/host';
 
-import { classnames } from '../../../hooks';
-import { get_lang } from '../../../hooks/i18n';
-import { Title, Incident, TimelineItem, Box } from '../../../components';
+import { classnames } from '../../../../hooks';
+import { get_lang } from '../../../../hooks/i18n';
+import { Title, Incident, TimelineItem, Box } from '../../../../components';
 
 import Styles from './page.module.css';
 

@@ -1,7 +1,5 @@
-import { getHost } from '../hooks/host';
-import { Section, MainBanner, Title } from '../components';
-
-import Style from './page.module.css';
+import { getHost } from '../../hooks/host';
+import { Section, MainBanner, Title } from '../../components';
 
 const get_page_data = () => {
 	const host = getHost();
