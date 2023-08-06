@@ -103,6 +103,38 @@ INSERT INTO page (p_host, p_title, p_sections_json, p_performance_json) VALUES
 			"title": null,
 			"monitors": ["jocolina-url-shortener"]
 		}]
+	}]', NULL),
+
+	('embed-1', 'Embed example', '[{
+		"title": "",
+		"components": [{
+			"type": "performance-tracker",
+			"title": null,
+			"performance_trackers": [{
+				"id": "perf-tracker-3",
+				"width": 4
+			}, {
+				"id": "perf-tracker-2",
+				"chart": true,
+				"width": 4,
+				"unit": "ms2",
+				"ok": {
+					"lte": 150
+				},
+				"nok": {
+					"gte": 300
+				}
+			}]
+		}]
+	}]', NULL),
+
+	('embed-2', 'Embed monitor', '[{
+		"title": "Landing page",
+		"components": [{
+			"type": "monitor",
+			"title": null,
+			"monitors": ["jocolina-landing"]
+		}]
 	}]', NULL);
 
 INSERT INTO monitor (m_id, m_type, m_name, m_config_json) VALUES
@@ -117,7 +149,9 @@ INSERT INTO page_monitor_m2m (monitor_id, page_host) VALUES
 
 	('jocolina-landing', 'dev.jocolina.com'),
 	('jocolina-url-shortener', 'dev.jocolina.com'),
-	('accounts-api', 'dev.jocolina.com');
+	('accounts-api', 'dev.jocolina.com'),
+
+	('jocolina-landing', 'embed-2');
 
 INSERT INTO performance_tracker (pt_id, pt_name, pt_description, pt_display_config) VALUES
 	('perf-tracker-1', 'DB READ', 'Tracking DB READ Timing', '{"chart": true, "ok": { "lt": 200 }, "nok": { "gte": 200 }}'),
@@ -131,5 +165,8 @@ INSERT INTO page_performance_tracker_m2m (pt_id, page_host) VALUES
 
 	('perf-tracker-1', 'dev.jocolina.com'),
 	('perf-tracker-2', 'dev.jocolina.com'),
-	('perf-tracker-3', 'dev.jocolina.com');
+	('perf-tracker-3', 'dev.jocolina.com'),
+
+	('perf-tracker-2', 'embed-1'),
+	('perf-tracker-3', 'embed-1');
 
