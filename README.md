@@ -49,6 +49,17 @@ This repo is divided in 3 different components
 There is also a package called `db`. This package is shared between `pinger` and `api`
 to read/write from the database. It is a small wrapper over D1's API to simulate an ORM.
 
+## Embeds
+The app also allows you to call any "page" via the `/embed` link
+
+Ex: `https://example.com/embed/my-page`
+
+These are special pages where the background is transparent and there is no page title nor menu.
+They allow you to embed your monitors/performance trackers in different pages.
+
+Here's an example in Notion:
+<img src="docs/notion.png"/>
+
 <pre>
 Back of the envelope calculation for disk size
 
